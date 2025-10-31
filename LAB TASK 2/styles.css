@@ -56,7 +56,7 @@ nav {
 
 /* Hero Section */
 .hero {
-  background: url("https://picsum.photos/1600/800?blur=3&random=10") center/cover no-repeat;
+  background: url("bakeryy.jpeg") center/cover no-repeat;
   color: #f9f3e3;
   text-align: center;
   padding: 8rem 2rem;
@@ -409,4 +409,5 @@ footer {
 @media(max-width:600px){
   .testimonial { max-width: 100%; }
 }
+
 
