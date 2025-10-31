@@ -1,0 +1,35 @@
+/* checkout.css */
+
+/* Layout for checkout form and summary */
+.container-checkout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 2rem auto;
+  max-width: 1200px;
+}
+
+.checkout-form {
+  flex: 1 1 60%;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.order-summary {
+  flex: 1 1 35%;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  position: sticky;
+  top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .container-checkout {
+    flex-direction: column;
+  }
+  .order-summary {
+    position: static;
+  }
+}
