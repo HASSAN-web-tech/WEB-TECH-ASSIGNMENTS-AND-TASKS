@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Preview - BeBaker</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <h1 class="logo">BeBaker</h1>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/order/my-orders">My Orders</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container my-5">
+    <h1>Order Preview</h1>
+    <div class="row">
+      <div class="col-12">
+        <h2>Your Cart</h2>
+        <ul class="list-group mb-3">
+          <% cart.forEach(item => { %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <%= item.name %>
+              <span>Quantity: <%= item.quantity %> | Price: <%= item.price %> | Total: <%= (item.price * item.quantity).toFixed(2) %></span>
+            </li>
+          <% }) %>
+        </ul>
+        <p><strong>Original Total: <%= total.toFixed(2) %></strong></p>
+        <% if (coupon === 'SAVE10') { %>
+          <p><strong>Discounted Total: <%= discountedTotal.toFixed(2) %></strong></p>
+        <% } %>
+        <form action="/order/confirm" method="POST" class="mt-4">
+          <div class="mb-3">
+            <label for="customerName" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="customerName" name="customerName" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <textarea class="form-control" id="address" name="address" required></textarea>
+          </div>
+          <% if (coupon) { %>
+            <input type="hidden" name="coupon" value="<%= coupon %>">
+          <% } %>
+          <button type="submit" class="btn btn-primary">Confirm Order</button>
+          <a href="/order/cart" class="btn btn-secondary">Go Back to Cart</a>
+        </form>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
