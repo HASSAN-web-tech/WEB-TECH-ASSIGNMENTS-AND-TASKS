@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout Page</title>
+  <link rel="stylesheet" href="checkout.css">
+
+  <script src="checkout.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f0e6;
+      color: #3b2f2f;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .progress-step {
+      background-color: #d4b89c;
+      color: #3b2f2f;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      margin-right: 0.5rem;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .progress-step.active {
+      background-color: #8b5e3c;
+      color: #fff;
+    }
+    .sticky-summary {
+      position: sticky;
+      top: 1rem;
+    }
+    .btn-primary {
+      background-color: #8b5e3c;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #5e3a25;
+    }
+    .form-control:focus {
+      box-shadow: 0 0 0 0.2rem rgba(139, 94, 60, 0.25);
+    }
+    .card {
+      border-color: #d4b89c;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container my-5">
+  <div class="d-flex mb-4 flex-wrap" id="progressSteps">
+    <div class="progress-step active" data-step="1">Cart</div>
+    <div class="progress-step" data-step="2">Address</div>
+    <div class="progress-step" data-step="3">Payment</div>
+    <div class="progress-step" data-step="4">Review</div>
+  </div>
+
+  <div class="row">
+    <!-- Checkout Form -->
+    <div class="col-12 col-md-7 mb-4">
+      <form id="checkoutForm" novalidate>
+        <div class="mb-3">
+          <label for="fullName" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="fullName" placeholder="John Doe" required>
+          <div class="invalid-feedback">Full name must be at least 3 characters.</div>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" placeholder="example@mail.com" required>
+          <div class="invalid-feedback">Enter a valid email address.</div>
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone</label>
+          <input type="text" class="form-control" id="phone" placeholder="03123456789" required>
+          <div class="invalid-feedback">Enter at least 10 digits.</div>
+        </div>
+        <div class="mb-3">
+          <label for="address" class="form-label">Address</label>
+          <input type="text" class="form-control" id="address" placeholder="123 Main St" required>
+          <div class="invalid-feedback">Address is required.</div>
+        </div>
+        <div class="mb-3">
+          <label for="city" class="form-label">City</label>
+          <input type="text" class="form-control" id="city" placeholder="City" required>
+          <div class="invalid-feedback">City is required.</div>
+        </div>
+        <div class="mb-3">
+          <label for="postal" class="form-label">Postal Code</label>
+          <input type="text" class="form-control" id="postal" placeholder="12345" required>
+          <div class="invalid-feedback">Enter 4-6 digits postal code.</div>
+        </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">Country</label>
+          <select class="form-select" id="country" required>
+            <option value="">Select country</option>
+            <option value="Pakistan">Pakistan</option>
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+          </select>
+          <div class="invalid-feedback">Country is required.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Payment Method</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="paymentMethod" id="card" value="Card" required>
+            <label class="form-check-label" for="card">Card</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="paymentMethod" id="cod" value="COD" required>
+            <label class="form-check-label" for="cod">Cash on Delivery</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="paymentMethod" id="wallet" value="Wallet" required>
+            <label class="form-check-label" for="wallet">Wallet</label>
+          </div>
+          <div class="invalid-feedback d-block" id="paymentError" style="display:none;">Select a payment method.</div>
+        </div>
+
+        <div id="cardFields" class="mb-3 d-none">
+          <div class="mb-2">
+            <label for="cardHolder" class="form-label">Cardholder Name</label>
+            <input type="text" class="form-control" id="cardHolder">
+          </div>
+          <div class="mb-2">
+            <label for="cardNumber" class="form-label">Card Number</label>
+            <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456">
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="expiry" class="form-label">Expiry</label>
+              <input type="text" class="form-control" id="expiry" placeholder="MM/YY">
+            </div>
+            <div class="col">
+              <label for="cvv" class="form-label">CVV</label>
+              <input type="text" class="form-control" id="cvv" placeholder="123">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-check my-3">
+          <input class="form-check-input" type="checkbox" id="terms">
+          <label class="form-check-label" for="terms">I agree to the terms and conditions</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="placeOrder" disabled>Place Order</button>
+      </form>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="col-12 col-md-5">
+      <div class="card sticky-summary p-3">
+        <h5>Order Summary</h5>
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between">
+            <span id="cakeNameSummary">Cake Name</span>
+            <strong id="cakePriceSummary">Rs 0</strong>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Shipping</span>
+            <strong id="shippingCost">Rs 500</strong>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Tax</span>
+            <strong id="taxCost">Rs 400</strong>
+          </li>
+
+          <!-- Coupon Section -->
+          <li class="list-group-item">
+            <div class="input-group">
+              <input type="text" id="couponCode" class="form-control" placeholder="Enter coupon code">
+              <button class="btn btn-primary" type="button" id="applyCoupon">Apply</button>
+            </div>
+            <small id="couponMessage" class="text-success d-none mt-2"></small>
+          </li>
+
+          <li class="list-group-item d-flex justify-content-between">
+            <strong>Total</strong>
+            <strong id="totalCost">Rs 0</strong>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  const urlParams = new URLSearchParams(window.location.search);
+  const cakeName = urlParams.get('cake') || "Chocolate Cake";
+  const cakePrice = parseInt(urlParams.get('price')) || 2500;
+  const shipping = 500;
+  const tax = 400;
+  let discount = 0;
+
+  function updateTotal() {
+    let total = cakePrice + shipping + tax;
+    if (discount > 0 && discount < 1) total -= total * discount;
+    else if (discount >= 100) total -= discount;
+    $('#totalCost').text("Rs " + Math.max(0, Math.round(total)));
+  }
+
+  $('#applyCoupon').click(function() {
+    const code = $('#couponCode').val().trim().toUpperCase();
+    let message = '';
+    discount = 0;
+
+    if (code === 'CAKE10') {
+      discount = 0.10; message = '🎉 10% discount applied!';
+    } else if (code === 'FREESHIP') {
+      discount = 500; message = '🚚 Free shipping applied!';
+    } else if (code === 'SWEET20') {
+      discount = 0.20; message = '🍰 20% off on your cake!';
+    } else {
+      message = '❌ Invalid coupon code.';
+      $('#couponMessage').removeClass('text-success').addClass('text-danger').text(message).removeClass('d-none');
+      updateTotal();
+      return;
+    }
+
+    $('#couponMessage').removeClass('text-danger').addClass('text-success').text(message).removeClass('d-none');
+    updateTotal();
+  });
+
+  $('#cakeNameSummary').text(cakeName.replace(/-/g, ' '));
+  $('#cakePriceSummary').text("Rs " + cakePrice);
+  updateTotal();
+
+  function updateProgress(step) {
+    $('.progress-step').removeClass('active');
+    $('.progress-step').each(function(){
+      if ($(this).data('step') <= step) $(this).addClass('active');
+    });
+  }
+
+  function detectStep() {
+    const name = $('#fullName').val().trim();
+    const email = $('#email').val().trim();
+    const address = $('#address').val().trim();
+    const city = $('#city').val().trim();
+    const payment = $('input[name="paymentMethod"]:checked').length;
+    const terms = $('#terms').is(':checked');
+
+    if (!name && !email) updateProgress(1);
+    else if (name && email && address && city && !payment) updateProgress(2);
+    else if (payment && !terms) updateProgress(3);
+    else if (terms) updateProgress(4);
+  }
+
+  $('input, select').on('input change', detectStep);
+
+  function toggleCardFields() {
+    if ($('#card').is(':checked')) $('#cardFields').removeClass('d-none');
+    else $('#cardFields').addClass('d-none');
+    detectStep();
+  }
+
+  $('input[name="paymentMethod"]').change(toggleCardFields);
+  $('#terms').change(() => $('#placeOrder').prop('disabled', !$('#terms').is(':checked')));
+
+  $('#checkoutForm').submit(function(e){
+    e.preventDefault();
+    let valid = true;
+    $('.form-control').removeClass('is-invalid');
+    $('#paymentError').hide();
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phonePattern = /^[0-9]{10,15}$/;
+    const postalPattern = /^[0-9]{4,6}$/;
+
+    if ($('#fullName').val().trim().length < 3) { $('#fullName').addClass('is-invalid'); valid = false; }
+    if (!emailPattern.test($('#email').val().trim())) { $('#email').addClass('is-invalid'); valid = false; }
+    if (!phonePattern.test($('#phone').val().trim())) { $('#phone').addClass('is-invalid'); valid = false; }
+    if (!$('#address').val().trim()) { $('#address').addClass('is-invalid'); valid = false; }
+    if (!$('#city').val().trim()) { $('#city').addClass('is-invalid'); valid = false; }
+    if (!postalPattern.test($('#postal').val().trim())) { $('#postal').addClass('is-invalid'); valid = false; }
+    if (!$('#country').val()) { $('#country').addClass('is-invalid'); valid = false; }
+
+    const paymentMethod = $('input[name="paymentMethod"]:checked').val();
+    if (!paymentMethod) { $('#paymentError').show(); valid = false; }
+
+    if ($('#card').is(':checked')) {
+      $('#cardFields input').each(function(){
+        if (!$(this).val().trim()) { $(this).addClass('is-invalid'); valid = false; }
+      });
+    }
+
+    if (!$('#terms').is(':checked')) {
+      alert('⚠️ You must accept the terms before placing your order.');
+      valid = false;
+    }
+
+    if (!valid) {
+      $('html, body').animate({ scrollTop: $('.is-invalid').first().offset().top - 50 }, 500);
+      return;
+    }
+
+    updateProgress(4);
+    alert(`🎉 Order placed successfully!\n\nCake: ${cakeName.replace(/-/g, ' ')}\nTotal: ${$('#totalCost').text()}`);
+    $('#checkoutForm')[0].reset();
+    $('#cardFields').addClass('d-none');
+    $('#placeOrder').prop('disabled', true);
+    updateProgress(1);
+  });
+});
+</script>
+
+
+</body>
+</html>
