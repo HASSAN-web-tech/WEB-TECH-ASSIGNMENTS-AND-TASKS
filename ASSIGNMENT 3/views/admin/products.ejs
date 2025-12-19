@@ -1,0 +1,27 @@
+<%- include('admin/partials/admin_header') %>
+
+  <h2>Products</h2>
+  <div class="admin-actions">
+    <a class="btn" href="/admin/products/add">Add new product</a>
+  </div>
+
+  <table class="admin-table">
+    <thead><tr><th>Name</th><th>Price</th><th>Category</th><th>Actions</th></tr></thead>
+    <tbody>
+      <% products.forEach(function(p){ %>
+        <tr>
+          <td><%= p.name %></td>
+          <td>$<%= p.price %></td>
+          <td><%= p.category %></td>
+          <td>
+            <a class="btn small" href="/admin/products/<%= p._id %>/edit">Edit</a>
+            <form action="/admin/products/<%= p._id %>/delete" method="post" style="display:inline">
+              <button class="btn danger small" type="submit" onclick="return confirm('Delete?')">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+<%- include('admin/partials/admin_footer') %>

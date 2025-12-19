@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+
+<main>
+  <h1>Products</h1>
+  <form method="get" action="/products">
+    <label>Category: <input name="category" value="<%= query.category || '' %>"></label>
+    <label>Min price: <input name="minPrice" value="<%= query.minPrice || '' %>"></label>
+    <label>Max price: <input name="maxPrice" value="<%= query.maxPrice || '' %>"></label>
+    <button type="submit">Filter</button>
+  </form>
+
+  <div class="products">
+    <% products.forEach(function(p){ %>
+      <div class="product">
+        <% if (p.image) { %>
+          <img src="<%= p.image %>" alt="<%= p.name %>" style="max-width:220px;display:block;margin-bottom:8px;" />
+        <% } else { %>
+          <img src="/p1.jpeg" alt="<%= p.name %>" style="max-width:220px;display:block;margin-bottom:8px;" />
+        <% } %>
+        <h3><a href="/products/<%= p._id %>"><%= p.name %></a></h3>
+        <p>Price: $<%= p.price %></p>
+        <p><%= p.category %></p>
+      </div>
+    <% }) %>
+  </div>
+
+  <div class="pagination">
+    <% const totalPages = Math.ceil(total/limit); %>
+    <% if (page>1) { %>
+      <a href="?page=<%= page-1 %>&limit=<%= limit %>">Prev</a>
+    <% } %>
+    <span>Page <%= page %> / <%= totalPages || 1 %></span>
+    <% if (page < totalPages) { %>
+      <a href="?page=<%= page+1 %>&limit=<%= limit %>">Next</a>
+    <% } %>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

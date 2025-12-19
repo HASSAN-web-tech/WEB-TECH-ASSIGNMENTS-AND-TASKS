@@ -1,0 +1,17 @@
+<%- include('admin/partials/admin_header') %>
+
+  <h2>Order Detail</h2>
+  <div class="admin-form">
+    <p><strong>Customer:</strong> <%= order.customerName || 'Guest' %></p>
+    <p><strong>Address:</strong> <%= order.address || '-' %></p>
+    <p><strong>Total:</strong> $<%= order.total %></p>
+    <p><strong>Status:</strong> <%= order.status %></p>
+    <h3>Items</h3>
+    <ul>
+      <% order.items.forEach(function(it){ %>
+        <li><%= (it.productId && it.productId.name) || 'Product' %> x <%= it.quantity %></li>
+      <% }) %>
+    </ul>
+  </div>
+
+<%- include('admin/partials/admin_footer') %>

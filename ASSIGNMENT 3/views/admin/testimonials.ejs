@@ -1,0 +1,24 @@
+<%- include('admin/partials/admin_header') %>
+
+  <h2>Testimonials</h2>
+  <div class="admin-actions"><a class="btn" href="/admin/testimonials/add">Add testimonial</a></div>
+  <table class="admin-table">
+    <thead><tr><th>Author</th><th>Text</th><th>Rating</th><th>Actions</th></tr></thead>
+    <tbody>
+      <% testimonials.forEach(function(t){ %>
+        <tr>
+          <td><%= t.author %></td>
+          <td><%= t.text %></td>
+          <td><%= t.rating %></td>
+          <td>
+            <a class="btn small" href="/admin/testimonials/<%= t._id %>/edit">Edit</a>
+            <form action="/admin/testimonials/<%= t._id %>/delete" method="post" style="display:inline">
+              <button class="btn danger small" type="submit" onclick="return confirm('Delete?')">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+<%- include('admin/partials/admin_footer') %>

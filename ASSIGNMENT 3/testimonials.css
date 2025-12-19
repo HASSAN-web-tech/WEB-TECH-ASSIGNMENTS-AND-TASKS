@@ -1,0 +1,52 @@
+.testimonial-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.testimonial-content {
+  background: #fff;
+  max-width: 500px;
+  width: 100%;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 28px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.customer-photo {
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.slides-container { position: relative; }
+.testimonial-slide { display: none; }
+.testimonial-slide.active { display: block; }
+
+.slider-btn {
+  border: none;
+  background: none;
+  font-size: 34px;
+  cursor: pointer;
+  margin-top: 12px;
+}

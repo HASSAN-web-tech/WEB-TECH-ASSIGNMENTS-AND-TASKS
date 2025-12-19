@@ -1,0 +1,17 @@
+/* Basic admin layout styles */
+body { font-family: Arial, Helvetica, sans-serif; margin:0; padding:0; background:#f4f6f8; }
+.container { max-width: 1000px; margin: 0 auto; padding: 16px; }
+.admin-header { background:#2c3e50; color:#fff; padding:12px 0; }
+.admin-header h1 { margin:0; display:inline-block; font-size:20px; }
+.admin-header nav { float:right; }
+.admin-header nav a { color:#fff; margin-left:12px; text-decoration:none; }
+.admin-main { padding:20px 0; }
+.admin-table { width:100%; border-collapse:collapse; background:#fff; }
+.admin-table th, .admin-table td { padding:12px; border-bottom:1px solid #e6e6e6; text-align:left; }
+.admin-actions { margin-bottom:12px; }
+.btn { display:inline-block; padding:8px 12px; background:#27ae60; color:#fff; text-decoration:none; border-radius:4px; }
+.btn.small { padding:6px 8px; font-size:0.9em; }
+.btn.danger { background:#e74c3c; }
+.admin-form { background:#fff; padding:16px; border-radius:6px; }
+.admin-form label { display:block; margin-bottom:8px; }
+.admin-footer { text-align:center; padding:12px 0; color:#666; margin-top:20px; }
